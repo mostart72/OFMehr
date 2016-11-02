@@ -1,0 +1,42 @@
+{
+  "name": "OFMehr",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "This extension was created with the awesome extensionizr.com",
+  "homepage_url": "http://extensionizr.com",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "options_ui": {
+    "page": "src/options.html",
+    "chrome_style": true
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://server2.onlinefussballmanager.de/*"
+      ],
+      "js": [
+		"js/jquery/jquery.min.js",
+        "src/inject/inject.js"
+      ],
+	  "all_frames": true
+    },
+    {
+      "matches": [
+        "http://www.onlinefussballmanager.de/*"
+      ],
+      "js": [
+		"js/jquery/jquery.min.js",
+        "src/inject/injectClassic.js"
+      ],
+	  "all_frames": true
+    }
+  ]
+}

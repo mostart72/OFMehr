@@ -1,0 +1,128 @@
+chrome.extension.sendMessage({}, function(response) {
+
+	var readyStateCheckInterval = setInterval(function() {
+	if (document.readyState === "complete") {
+		clearInterval(readyStateCheckInterval);
+
+		// ----------------------------------------------------------
+		// This part of the script triggers when page is done loading
+		//console.log("Hello. This message was sent from scripts/inject.js");
+		// ----------------------------------------------------------
+
+
+
+		var points;
+		var tp;
+		var ep;
+		var awp;
+		var currentStrength;
+		var diffToNextStep;
+
+		var stufen = [
+			18298,
+			17180,
+			16036,
+			14866,
+			13683,
+			12513,
+			11356,
+			10212,
+			9094,
+			8002,
+			6962,
+			5974,
+			5038,
+			4154,
+			3322,
+			2542,
+			1840,
+			1255,
+			839,
+			546,
+			364,
+			234,
+			130,
+			0
+		];
+
+
+		var stufenSorted = stufen.reverse();
+
+		var color;
+		var red = "#FF3300";
+		var orange = "#F4A742";
+		var blue = "#4286F4";
+
+		var path = window.location.pathname.substring(window.location.pathname.lastIndexOf("/") + 1);
+
+		console.log(path);
+
+		if(path == "transfermarkt.php") {
+		
+			var table = $('div#transfermarkt > div > div > table > tbody');
+
+			table.find('td[width="110"]').each(function() {
+
+				currentStrength = parseInt( $(this).prev('td').text() );
+				points = $(this).text().split("/");
+
+				ep = parseInt( points[0].trim().replace(".", "") );
+				tp = parseInt( points[1].trim().replace(".", "") );
+				awp = calculateAWP(ep,tp);
+
+				diffToNextStep = getDiffToNext(stufenSorted, awp, currentStrength);
+
+				color = blue;	
+				if(diffToNextStep < 50) {
+					color = red;
+				}
+				else if(diffToNextStep < 150){
+					color = orange;
+				}
+				
+				
+				$(this).html($(this).text() + ' ' + '<span style="color:' + color + '">' + diffToNextStep + '</span>');
+			});
+		}
+		else if(path == "players-statistics.php"){
+
+			var table = $('table#playersStatisticsTable > tbody');
+
+			table.find('tr').each(function() {
+
+				var row = $(this);
+
+				currentStrength = parseInt( row.find("td[title^=St]").text().trim() );
+
+                awp = parseInt( row.find("td[title$=Aufwertung] > span").text().trim().replace(".", "")  );
+
+                diffToNextStep = getDiffToNext(stufenSorted, awp, currentStrength);
+
+                color = blue;
+                if(diffToNextStep < 50) {
+                    color = red;
+                }
+                else if(diffToNextStep < 150){
+                    color = orange;
+                }
+
+               row.find("td[title$=Aufwertung]").next('td').html('<span style="color:' + color + '">' + diffToNextStep + '</span>');
+            });
+		}
+
+	}
+	}, 10);
+
+	var getDiffToNext = function(stufenSorted, awp, currentStrength){
+		var step = stufenSorted[currentStrength];
+		//console.log(awp+"#"+currentStrength+"#"+step);
+		return step - awp;
+	}
+
+
+	var calculateAWP = function(ep,tp){
+		var awp = (ep*tp*2) / (ep+tp);
+		return awp.toFixed(0);
+	};
+
+});
