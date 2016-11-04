@@ -1,9 +1,9 @@
 {
   "name": "OFMehr",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "manifest_version": 2,
-  "description": "This extension was created with the awesome extensionizr.com",
-  "homepage_url": "http://extensionizr.com",
+  "description": "Extension zeigt berechnete AWP auf transfermarkt und in der Spielerstatistik",
+  "homepage_url": "https://github.com/mostart72/OFMehr",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",

@@ -2,24 +2,21 @@
 <html>
 <head>
   <title>OFMehr Options</title>
-  <style>
-    body: { padding: 10px; }
-  </style>
 </head>
 
-<body>
-  Aufwertungsstufen Server 2 DE:
+<body style="height:560px;">
+	<div style="position:absolute;top:10px;left:10px;height:550px;width:180px">
+		<label style="position:absolute;top:0px;left:0px;font-weight:bold;">AWP Server 2 DE:</label>
+		<textarea style="position:absolute;top:30px;left:0px;height:390px;width:150px" cols="20" rows="30" id="stufenServerDE" name="stufenServerDE" placeholder="Stufen im Format <Stufe><TAB><Punkte>\nzB. kopieren von www.toolsofm.de"></textarea>
 
-	<textarea cols="20" rows="30" id="stufenServerDE" name="stufenServerDE" placeholder="Stufen im Format <Stufe><TAB><Punkte>\nzB. kopieren von www.toolsofm.de"></textarea>
+	</div>
+	<div style="position:absolute;top:10px;left:200px;height:500px;width:180px">
+		<label style="position:absolute;top:0px;left:0px;font-weight:bold;">AWP Server Classic DE:</label>
+		<textarea style="position:absolute;top:30px;left:0px;height:390px;width:150px" cols="20" rows="30" id="stufenClassicDE" name="stufenClassicDE" placeholder="Stufen im Format <Stufe><TAB><Punkte>\nzB. kopieren von www.toolsofm.de"></textarea>
+	</div>
 
-<br/>
-
-  Aufwertungsstufen Server Classic DE:
-
-	<textarea cols="20" rows="30" id="stufenClassicDE" name="stufenClassicDE" placeholder="Stufen im Format <Stufe><TAB><Punkte>\nzB. kopieren von www.toolsofm.de"></textarea>
-
-  <div id="status"></div>
-  <button id="save">Save</button>
+  <div style="position:absolute;top:440px;left:200px;font-size:18px;color:green;" id="status"></div>
+  <button style="position:absolute;top:440px;left:10px;"  id="save">Save</button>
 
   <script src="options.js"></script>
 </body>
