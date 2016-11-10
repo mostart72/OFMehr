@@ -36,6 +36,9 @@ chrome.extension.sendMessage({}, function(response) {
 					else if(path == "players-statistics.php"){
 						processPlayerStatsPage(stufenSorted);
 					}
+					else if(path == "transfer_gebote.php"){
+						processTransferOfferPage(stufenSorted);
+					}
 			});   
 
 		}
@@ -67,6 +70,38 @@ chrome.extension.sendMessage({}, function(response) {
 				
 				$(this).html($(this).text() + ' ' + '<span style="color:' + color + '">' + diffToNextStep + '</span>');
 			});
+		}
+
+	var processTransferOfferPage = function(stufen) {
+		
+			var table = $('table#player_bids > tbody');
+
+
+			table.children('tr').each(function() {
+
+				var row = $(this);
+
+				var cols = row.children("td");
+
+				currentStrength = cols.eq(4).find('strong').text();
+
+				ep = parseInt( cols.eq(6).text().trim().replace(".", "") );
+				tp = parseInt( cols.eq(7).text().trim().replace(".", "") );
+				awp = calculateAWP(ep,tp);
+
+                diffToNextStep = getDiffToNext(stufen, awp, currentStrength);
+
+                color = blue;
+                if(diffToNextStep < 50) {
+                    color = red;
+                }
+                else if(diffToNextStep < 150){
+                    color = orange;
+                }
+
+               cols.eq(7).html(cols.eq(7).text() +  ' <span style="color:' + color + '">' + diffToNextStep + '</span>');
+            });
+
 		}
 
 	var processPlayerStatsPage = function(stufen) {
