@@ -37,12 +37,44 @@ chrome.extension.sendMessage({}, function(response) {
 						processPlayerStatsPage(stufenSorted);
 					}
 					else if(path == "transfer_gebote.php"){
+						processTransferWatchlist(stufenSorted);
+					}
+					else if(path == "angebote.php"){
 						processTransferOfferPage(stufenSorted);
 					}
 			});   
 
 		}
 	}, 10);
+
+	var processTransferOfferPage = function(stufen){
+		
+			var table = $('table#players_to_market > tbody');
+
+			table.children('tr').each(function() {
+
+				var row = $(this);
+
+				var cols = row.children("td");
+
+				currentStrength = cols.eq(3).find('span').text().trim();
+
+				awp = cols.eq(4).find('span').text().trim().replace(".", "");
+
+                diffToNextStep = getDiffToNext(stufen, awp, currentStrength);
+
+                color = blue;
+                if(diffToNextStep < 50) {
+                    color = red;
+                }
+                else if(diffToNextStep < 150){
+                    color = orange;
+                }
+
+               cols.eq(5).html(' <span style="color:' + color + '">' + diffToNextStep + '</span>');
+            });
+
+		}
 
 	var processTransferPage = function(stufen){
 		
@@ -72,7 +104,7 @@ chrome.extension.sendMessage({}, function(response) {
 			});
 		}
 
-	var processTransferOfferPage = function(stufen) {
+	var processTransferWatchlist = function(stufen) {
 		
 			var table = $('table#player_bids > tbody');
 
