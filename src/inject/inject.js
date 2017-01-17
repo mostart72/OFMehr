@@ -98,9 +98,13 @@ chrome.extension.sendMessage({}, function(response) {
 				else if(diffToNextStep < 150){
 					color = orange;
 				}
-				
-				
-				$(this).html($(this).text() + ' ' + '<span style="color:' + color + '">' + diffToNextStep + '</span>');
+
+				if(diffToNextStep > 0) {
+					$(this).parent('tr').remove();
+				}
+				else {
+					$(this).html($(this).text() + ' ' + '<span style="color:' + color + '">' + diffToNextStep + '</span>');
+				}
 			});
 	}
 
